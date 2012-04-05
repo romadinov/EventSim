@@ -15,14 +15,14 @@ class Event
 
 end
 
-class PoissonEvent < Event
+class ProbEvent < Event 
 
-	def initialize(lambda)
-		super()
-		@lambda=lambda
+	def initialize(prob)
+		@prob=prob
 	end
+
 	def estimate_delay(simEngine)
-		-1.0/@lambda*Math.log(rand())
+		@prob.generate
 	end
 end
 

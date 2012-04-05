@@ -1,4 +1,4 @@
-require_relative '../lib/event_sim/event_sim'
+require_relative '../lib/event_sim'
 require 'test/unit'
 
 class TestSimEngine < SimEngine
@@ -31,9 +31,9 @@ class TestEvent < Event
 	end
 end
 
-class TestPoisson < PoissonEvent
-	def initialize(lambda, id)
-		super(lambda)
+class TestProb < ProbEvent
+	def initialize(distrib, id)
+		super(distrib)
 		@id=id
 	end
 
@@ -52,7 +52,7 @@ class PoissonEventsTest < Test::Unit::TestCase
 
 		sum=0
 
-		event=PoissonEvent.new 0.5
+		event=ProbEvent.new (exp_d 0.5)
 
 		1.upto(100000) do |x|
 			sum+=event.estimate_delay(nil)
