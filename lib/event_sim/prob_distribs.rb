@@ -31,5 +31,5 @@ class ExpDistribution
 end
 
 def exp_d(lambda)
-	return ExpDistribution.new(lambda)
+	return ExpDistribution.new(lambda)  
 end
