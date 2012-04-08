@@ -2,11 +2,14 @@ require "priority_queue"
 require "awesome_print"
 
 class Event
+  
+  attr_accessor :fire_time
+  
 	def initialize()
 	end
 
 	def fire(simEngine, fire_time) 
-		# Do nothing
+		@fire_time=fire_time
 	end
 
 	def estimate_delay(simEngine) 
@@ -34,20 +37,30 @@ class SimEngine
 	end
 
 	def add_event(event)
-		time_to_fire=@time+event.estimate_delay(self)
+#	  puts @time
+	  delay=event.estimate_delay(self)
+		time_to_fire=@time+delay
+#    puts "Add event #{time_to_fire} #{event.id} #{delay}"
 		@events.push event, time_to_fire
 	end
 
 	def <<(event)
 		self.add_event(event)
 	end
+	
+	def time
+	  @time
+  end
 
 	def tick()
+#	  puts @time
 		if !@events.empty? then
 			node=@events.delete_min
 			event=node[0]
+#			puts "Fire!"
+      @time=node[1]
+#      event.fire_time=@time
 			event.fire(self, node[1])
-			time=node[1]
 			node
 		end
 	end
